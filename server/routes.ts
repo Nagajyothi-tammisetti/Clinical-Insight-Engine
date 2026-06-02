@@ -981,6 +981,18 @@ export async function registerRoutes(httpServer: Server, app: Express): Promise<
     }
   });
 
+        res.setHeader("Content-Type", "text/csv");
+        res.setHeader(
+          "Content-Disposition",
+          "attachment; filename=assessments.csv"
+        );
+        return res.send(csv);
+      } catch (err) {
+        console.error("CSV export error:", err);
+        return res.status(500).json({ message: "Failed to export CSV." });
+      }
+    }
+  );
   return httpServer;
 }
 
